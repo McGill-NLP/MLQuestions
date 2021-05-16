@@ -14,3 +14,4 @@ The MLQuestions dataset can be found in data/ subdirectory.
 4. Run UDA-SelfTraining.sh and UDA-BackTraining.sh to run self-training and back-training experiments on MLQuestions data as described in section 4 of the paper.
 
 ### Python Libraries and Dependencies
+Please install python modules from requirements.txt file.
