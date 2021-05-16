@@ -1,4 +1,4 @@
-## Back-Training excels Self-Training at Unsupervised Domain Adaptationof Question Generation and Passage Retrieval
+## Back-Training excels Self-Training at Unsupervised Domain Adaptation of Question Generation and Passage Retrieval
 by *Devang Kulshreshtha, Robert Belfer, Iulian Vlad Serban and Siva Reddy*
 
 Code and data for reproducing the results of our paper available on [arXiv](https://arxiv.org/abs/2104.08801).
