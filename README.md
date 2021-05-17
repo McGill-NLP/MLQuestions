@@ -6,12 +6,14 @@ Code and data for reproducing the results of our paper available on [arXiv](http
 ### Data description
 The MLQuestions dataset can be found in data/ subdirectory.
 
-### Instructions for running the code
-
+### Downloading pre-trained source domain NaturalQuestions checkpoint
 1. Download DPR IR model checkpoint pre-trained on NaturalQuestions. Instructions can be found in DPR official [repository](https://github.com/facebookresearch/DPR). Store it in IR/NQ-checkpoint subdirectory.
 2. Download BART QG model trained on NaturalQuestions from [here](https://drive.google.com/drive/folders/1TyvdAdP57_uWPoqzg0iZfNABin4GAHfw?usp=sharing). Place the downloaded files config.json and pytorch_model.bin in QG/NQ-checkpoint subdirectory.
-3. Run eval-no-adaptation.sh to run source to target domain without adaptation model (section 3 of paper).
-4. Run UDA-SelfTraining.sh and UDA-BackTraining.sh to run self-training and back-training experiments on MLQuestions data as described in section 4 of the paper.
+
+### Instructions for running the code
+1. Run eval-no-adaptation.sh to run source to target domain without adaptation model (section 3 of paper).
+2. Run UDA-SelfTraining.sh and UDA-BackTraining.sh to run self-training and back-training experiments on MLQuestions data as described in section 4 of the paper.
+3. (Optional) You can also run consistency experiments by running any/all of UDA-SelfTraining-SC.sh, UDA-SelfTraining-CC.sh, UDA-BackTraining-SC.sh, UDA-BackTraining-CC.sh. SC denotes self-consistency and CC denotes cross-consistency.
 
 ### Python Libraries and Dependencies
 Please install python modules from requirements.txt file.
