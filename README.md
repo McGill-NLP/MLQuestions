@@ -7,7 +7,7 @@ Code and data for reproducing the results of our paper available on [arXiv](http
 The MLQuestions dataset can be found in data/ subdirectory.
 
 ### Downloading pre-trained source domain NaturalQuestions checkpoint
-1. Download DPR IR model checkpoint pre-trained on NaturalQuestions. Instructions can be found in DPR official [repository](https://github.com/facebookresearch/DPR). Store it in IR/NQ-checkpoint subdirectory.
+1. Download DPR IR model checkpoint pre-trained on NaturalQuestions. Instructions can be found in DPR official [repository](https://github.com/facebookresearch/DPR). Store it in IR/NQ-checkpoint subdirectory. The model file name will be bert-base-encoder.cp
 2. Download BART QG model trained on NaturalQuestions from [here](https://drive.google.com/drive/folders/1TyvdAdP57_uWPoqzg0iZfNABin4GAHfw?usp=sharing). Place the downloaded files config.json and pytorch_model.bin in QG/NQ-checkpoint subdirectory.
 
 ### Instructions for running the code
@@ -17,3 +17,4 @@ The MLQuestions dataset can be found in data/ subdirectory.
 
 ### Python Libraries and Dependencies
 Please install python modules from requirements.txt file.
+Note: For METEOR score to be computed, Java must be installed. Otherwise only BLEU 1-4 will be computed for QG metrics.

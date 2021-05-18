@@ -17,9 +17,12 @@ python generate_dense_embeddings.py --model_file NQ-checkpoint/bert-base-encoder
 #5. IR model retrieves passages from questions and prepares synthetic data for back-training QG
 python generate.py --model_file NQ-checkpoint/bert-base-encoder.cp --embeddings NQ-checkpoint/embeddings_50k_0.pkl --out_file ../QG/outputs/BT.tsv
 
+#6. Filter IR model data using IR model (self-consistency)
+python consistency.py --model_file NQ-checkpoint/bert-base-encoder.cp --embeddings_file NQ-checkpoint/embeddings_50k_0.pkl --input_file outputs/BT.tsv --output_file outputs/BT-sc.tsv --threshold 78.24
+
 #7. Train QG model on synthetic back-training data
 cd ../QG/
-python train.py --epochs 5 --train_file outputs/BT.tsv --checkpoint NQ-checkpoint/
+python train.py --epochs 5 --train_file outputs/BT-sc.tsv --checkpoint NQ-checkpoint/
 
 #8. Train IR model on synthetic back-training data
 cd ../IR/
