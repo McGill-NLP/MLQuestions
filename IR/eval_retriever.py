@@ -49,7 +49,7 @@ def main(args2) :
     embeddings = np.array([e[1] for e in embeddings])
     df = pd.read_csv(args2.eval_file, sep='\t')
     qs = df['target_text'].tolist()
-    indexes = [i for i in range(len(df))]
+    indexes = df['indexes'].tolist() if 'indexes' in df else [i for i in range(len(df))]
     top_k = [1,5,10,20,40,50,100]
     correct_cnt = {k:0 for k in top_k}
     q_embeddings = np.array([get_embedding(q) for q in qs])
