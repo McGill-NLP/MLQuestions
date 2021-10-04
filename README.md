@@ -20,3 +20,13 @@ The MLQuestions dataset can be found in data/ subdirectory.
 ### Python Libraries and Dependencies
 Please install python modules from requirements.txt file.
 Note: For METEOR score to be computed, Java must be installed. Otherwise only BLEU 1-4 will be computed for QG metrics.
+
+## Citation
+
+If you find this useful in your research, please consider citing:
+
+    @article{kulshreshtha2021back,
+      title={Back-Training excels Self-Training at Unsupervised Domain Adaptation of Question Generation and Passage Retrieval},
+      author={Kulshreshtha, Devang and Belfer, Robert and Serban, Iulian Vlad and Reddy, Siva},
+      journal={arXiv preprint arXiv:2104.08801},
+      year={2021}}
