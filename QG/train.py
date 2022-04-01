@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import torch
 from torch.utils.data import Dataset, DataLoader
-from transformers import BartTokenizer, BartForConditionalGeneration
+from transformers import BartTokenizer, BartForConditionalGeneration, AutoModelForSeq2SeqLM
 from torch import cuda
 
 device = 'cuda' if cuda.is_available() else 'cpu'
@@ -89,7 +89,7 @@ def main(args):
 
     training_loader = DataLoader(training_set, **train_params)
 
-    model = BartForConditionalGeneration.from_pretrained(args.checkpoint)
+    model = AutoModelForSeq2SeqLM.from_pretrained("McGill-NLP/bart-qg-nq-checkpoint")
     model = model.to(device)
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=args.lr)
 
