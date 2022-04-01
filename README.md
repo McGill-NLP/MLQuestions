@@ -10,7 +10,7 @@ The MLQuestions dataset can be found in data/ subdirectory.
 
 ### Downloading pre-trained source domain NaturalQuestions checkpoint
 1. Download DPR IR model checkpoint pre-trained on NaturalQuestions. Instructions can be found in DPR official [repository](https://github.com/facebookresearch/DPR). Store it in IR/NQ-checkpoint subdirectory. The model file name will be bert-base-encoder.cp
-2. Download BART QG model trained on NaturalQuestions from [here](https://drive.google.com/drive/folders/1TyvdAdP57_uWPoqzg0iZfNABin4GAHfw?usp=sharing). Place the downloaded files config.json and pytorch_model.bin in QG/NQ-checkpoint subdirectory.
+2.The BART QG model trained on NaturalQuestions can be found on [huggingface](https://huggingface.co/McGill-NLP/bart-qg-nq-checkpoint). You don't need to download the model, it will be downloaded automatically when you run the main code as described below.
 
 ### Instructions for running the code
 1. Run eval-no-adaptation.sh to run source to target domain without adaptation model (section 3 of paper).
