@@ -8,85 +8,84 @@
   }
 </style>
 <script>
-  // on ducment load call AJAX to get the data
-  function strToHTML(str) {
-    //string to JSON
-    var obj = JSON.parse(str);
-    var htmlString = "";
-    //loop through the JSON object
-    for (var i = 0; i < obj.length; i++) {
-      var isUnanswerbale = obj[i]["Answer"] == "UNANSWERABLE"
-      htmlString += "<b>Question " + (i+1).toString() + ":</b> " + obj[i]["Question"] + "<br>";
-//       htmlString += "<b>Rewrite " + (i+1).toString() + ":</b> " + obj[i]["Rewrite"] + "<br>";
-      if (!isUnanswerbale){
-        htmlString += "<div class='rationale'><b>Rationale :</b> <i>" + obj[i]["Rationale"] + "</i><br></div>";
-      }
-      htmlString += "<b>Answer " + (i+1).toString() + ":</b> " + obj[i]["Answer"] + "<br>";
-      if (!isUnanswerbale){
-        var hrefLink = "https://en.wikipedia.org/wiki/" + obj[i]["Topic"].replaceAll(" ", "_");
-        if (obj[i]["Topic_section"] != "Introduction")
-          hrefLink += "#" + obj[i]["Topic_section"].replaceAll(" ", "_");
-        htmlString += "<b>Web Page :</b> <i>" + "<a href='" + hrefLink + "' target='_blank'>" + obj[i]["Topic"] + " (" + obj[i]["Topic_section"] + ")</a></i><br>";
-        }
+  // on document load call AJAX to get the data
+  function arrayToHTML(items) {
+    //loop through the array
+    htmlString = ""
+    for (var i = 0; i < items.length; i++) {
+      passage = items[i].split("\t")[1]
+      question = items[i].split("\t")[2]
+      htmlString += "<b>Passage " + (i+1).toString() + ":</b> " + passage + "<br>";
+      htmlString += "<b>Question " + (i+1).toString() + ":</b> " + question + "?<br>";
       htmlString += "<br>";
     }
 
     return htmlString;
   }
-  function getConversation() {
+  function showExamples() {
     console.log("ready!");
     $.ajax({
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
       type: 'GET',
-      dataType: 'json',
-      url: 'https://5du8ytlzg9.execute-api.us-east-2.amazonaws.com/default/topiocqaGetExample',
+      dataType: 'text',
+      url: 'https://raw.githubusercontent.com/McGill-NLP/MLQuestions/main/data/dev.tsv',
       success: function(data) {
-        console.log(data["body"]);
-        $("#datasetExplorer").html(strToHTML(data["body"]));
+        console.log(data);
+        const items = data.split("\n").slice(1);
+        const shuffled = items.sort(() => 0.5 - Math.random());
+        let selected_items = shuffled.slice(0, 10);
+        $("#datasetExplorer").html(arrayToHTML(selected_items));
       }, error: function(data) {
-        $("#datasetExplorer").html("<p>Failed to load conversation, please try after some time.</p>");
+        $("#datasetExplorer").html("<p>Failed to load dataset, please try after some time.</p>");
       }
     });
   }
-  function toggleVisible() {
-  var toggleElements = document.getElementsByClassName("rationale");
-    for (var i = 0; i < toggleElements.length; i++) {
-        toggleElements[i].style.display = toggleElements[i].style.display == "none" ? "block" : "none";
-    }
-}
   $(document).ready(function() {
-    getConversation();
+    showExamples();
   });
 </script>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
     <meta charset="UTF-8">
-    <title>TopiOCQA</title>
-    <link rel="icon" href="https://mcgill-nlp.github.io/topiocqa/topiocqa_no_background.png">
+    <title>MLQuestions</title>
+
+{% seo %}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
   </head>
   <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
 
     <header class="page-header" role="banner" style="background-image: linear-gradient(120deg, #d7816a, #bd4f6c);">
-      <h2 class="project-name"><img src="topiocqa_no_background.png" alt="logo" width="100" height="100" style="margin-bottom: -20px;"/>TopiOCQA: Open-domain Conversational Question Answering with Topic Switching</h2>
-      <h2 class="project-tagline">Vaibhav Adlakha, Shehzaad Dhuliawala, Kaheer Suleman, Harm de Vries, Siva Reddy</h2>
+      <h2 class="project-name">MLQuestions : A Question Generation Dataset for Educational Domain</h2>
+      <h2 class="project-tagline">Devang Kulshreshtha, Robert Belfer, Iulian Vlad Serban, Siva Reddy</h2>
+      <a href="https://arxiv.org/abs/2104.08801" target='_blank' class="btn">View paper on arXiv</a>
+      <a href="https://github.com/McGill-NLP/MLQuestions" target='_blank' class="btn">View code on GitHub</a>
+      <a href="https://github.com/McGill-NLP/MLQuestions/tree/main/data" class="btn">Download dataset</a>
+      <a href="https://huggingface.co/datasets/McGill-NLP/mlquestions" class="btn">Load via HuggingFace</a>
     </header>
 
     <main id="content" class="main-content" role="main">
-        
-      <h1 class="dataset-explorer" style="color: #d7816a;">Dataset Explorer <button style="background-color: white; border: 0px;"><span onclick="getConversation()" class=reload>&#x21bb;</span></button></h1>
-      <button class="btn btn-primary" onclick="toggleVisible()">Toggle Evidence</button>
+      <h1 class="dataset-explorer" style="color: #d7816a;">Overview</h1>
+        <p>The MLQuestions dataset consists of questions from Google search queries and passages from Wikipedia pages related to Machine learning domain. The dataset was created to support research in domain adaptation of question generation and passage retrieval models. </p>
+        <p>The EMNLP paper is available on <a href="https://arxiv.org/abs/2104.08801">arXiv</a> and the code to replicate the experiments can be found on <a href="https://github.com/McGill-NLP/MLQuestions">GitHub</a>. The interactive demo below loads random instances from the development set.</p>
+      <h1 class="dataset-explorer" style="color: #d7816a;">Dataset Explorer <button style="background-color: white; border: 0px;"><span onclick="showExamples()" class=reload>&#x21bb;</span></button></h1>
       <div class="dataset-explorer-container col-md-12" id="datasetExplorer" style="background-image: linear-gradient(120deg, #fbece8, #f8cad6); padding: 2em;">
         <p>Loading...</p>
       </div>
+      <p>For queries and clarifications please contact <b> devang.kulshreshtha (at) mila (dot) quebec </b></p>
+      {{ content }}
+
+      <footer class="site-footer">
+        {% if site.github.is_project_page %}
+          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
+        {% endif %}
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
     </main>
   </body>
 </html>
