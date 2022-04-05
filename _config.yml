@@ -4,3 +4,4 @@ plugins:
 
 # Google Analytics
 google_analytics: G-7JB62HG50L
+theme: jekyll-theme-cayman
